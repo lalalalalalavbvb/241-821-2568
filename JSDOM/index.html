@@ -6,8 +6,28 @@
     <title>Document</title>
 </head>
 <body>
+
+    <div id="hi">Hi <span style="display: none;">A</span></div>
     
-    ชื่อ: <input 
+    <h2>แบบฟอร์มเลือกความสนใจ</h2>
+    <!--
+    <ul>
+        <li>กีฬา</li>
+        <li>ดนตรี</li>
+        <li>อ่านหนังสือ</li>
+    </ul>
+    -->
+    <div id="content"></div>
+    <input type="checkbox" name="interest" value="กีฬา"> กีฬา
+    <input type="checkbox" name="interest" value="ดนตรี"> ดนตรี
+    <input type="checkbox" name="interest" value="อ่านหนังสือ"> อ่านหนังสือ
+    <br><br>
+    <button onclick="submitInterest()">ส่งข้อมูล</button>
+
+    <script>
+
+    /* <body> ตัวแปรปุ่มต่างๆของเก่า
+        ชื่อ: <input 
         id="fname"
         class="input"
         type="text" 
@@ -33,8 +53,9 @@
     <input type="radio" name="gender" value="male" onchange="onchangeGender()" checked="true"> ชาย
     <input type="radio" name="gender" value="female" onchange="onchangeGender()"> หญิง
 
-    <script>
-        // ***Select DOM
+
+        // <script> ของเก่า
+        // ***Select DOM การเข้าไปที่ Element แล้เอา Value ออกมา
 
         //const fnameInput = document.getElementById("fname"); // ElementById
         //console.log(fnameInput.value); // เอาแค่ค่าที่ต้องการ โชว์ใน console
@@ -66,7 +87,7 @@
         //    console.log("Developer clicked the button!")
         //}
 
-        function onchangeGender()
+        function onchangeGender() // ดูว่า Event มีการเปลี่ยนแปลงไหม
         {
             //console.log('onchangeGender');
             
@@ -82,7 +103,79 @@
                     console.log("เพศที่เลือก: " + genderInput[i].value);
                 }
             }
+        }*/
+
+        
+        // วันที่ 25/01/2026
+        // onkeydown คือ user กด keybroad ลงไป จังหวะกด
+        // Body
+        /*ชื่อ: 
+        <input type="text" name="fname" onkeydown="onFname()">
+
+        //script
+        function onkeyFname()
+        {
+            let fname = document.querySelector('Input[name="fname"]')
+            console.log('fname',fname.value);
         }
+
+        // Onkeyup คือ user ปล่อย keybroad จังหวะปล่อย
+        // Onkeypress คือ user กด keybroad ลงไป จังหวะกด (ไม่ค่อยได้ใช้)
+
+        // body
+        <button onmouseover="onmouseFname()"
+        onmouseup="onmouseupFname()"
+        onmousedown="onmousedown()"
+        >Click me</button>
+
+        // script
+        // Onmouseover คือเหตุการณ์ที่เมาส์ชี้ไปที่องค์ประกอบ
+        function onmouseoverFname()
+        {
+            console.log("Mouse is over the button");
+        }
+        // Onmouseup
+        function onmouseupFname()
+        {
+            console.log("Mouse is up the button");
+        }
+        // Onmousedown
+        function onmousedownFname()
+        {
+            console.log("Mouse down");
+        } */
+
+        let hiDOM = document.getElementById("hi")
+        //hiDOM.textContent = 'hello A'; // แทรกเข้าไปเป็น hello A ใน console
+        //hiDOM.innerText = 'hello <b>A</b>';
+        hiDOM.innerHTML = 'hello <b>A</b>'; // inner เปลี่ยนใน code html
+        console.log(hiDOM.textContent);
+        console.log(hiDOM.innerText);
+        console.log(hiDOM.innerHTML);
+
+        function submitInterest()
+        {
+            // 1.ดึงข้อมูลจาก checkbox ที่ถูกเลือก
+            let checkboxes = document.querySelectorAll('input[name="interest"]');
+            let contentHTML = '<ul>'; // เปิดหัว
+        
+            // 2.เอา value ของ checkbox ที่ถูกเลือกออกมา
+            for (let i = 0; i < checkboxes.length; i++)
+            {
+                if (checkboxes[i].checked)
+                {
+                    console.log(checkboxes[i].value); // แสดงค่าที่เลือกใน console
+                    contentHTML += '<li>' + checkboxes[i].value + '</li>';
+                }
+            }
+            // 3.วนค่าที่เลือกใส่กลับไปที่ html
+            contentHTML += '</ul>'; // ปิดท้าย
+
+            // 4.ใส่ html ที่สร้างขึ้นใหม่ลงใน div id="content"
+            let contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = contentHTML;
+        }
+
     </script>
 
 </body>
