@@ -1,0 +1,19 @@
+docker ps #ดูว่ามี CONTAINER ที่ run อยู่มีอะไรบ้าง
+docker ps --all #ดูว่ามี Container อะไรอยู่บ้าง
+docker run busybox echo 'hello world in docker'
+docker run busybox ls #ls คือคำสั่งอะไรก็ได้
+docker run busybox ping google.com #ตรวจสอบว่าปลายทางอยู่รึป่าว
+docker stop CONTAINER_ID #หยุด Container ตามด้วย id
+docker pull busybox #pull
+docker create busybox ping google.com #create ตามด้วยคำสั่ง
+docker start CONTAINER_ID #start
+docker rm CONTAINER_ID #ลบ CONTAINER
+docker system prune #อันตราย ลบ CONTAINER ที่ไม่ได้ใช้ทั้งหมด
+docker run nginx #คือ Run เว้ปเซิฟเวอร์
+docker exec -it CONTAINER_ID sh #เข้าไปใน CONTAINER อีกที
+docker exec -it CONTAINER_ID bash #เข้าไปใน CONTAINER เหมือนกัน แต่คนละแบบ มั้ง
+cat #เอาไว้ดูข้างในไฟล์
+docker run -p 80:80 nginx #เอาไว้สร้าง port จะสร้างกี่ CONTAINER ก็ได้ port ต้องไม่ซ้ำกัน คอมต้องแรง
+docker run -d -p 80:80 nginx #เหมือนข้างบน แค่ run แล้วออกเลย ป้อน command ได้ต่อ
+docker-compose up -d #Start ระบบ (ยังเรียนไม่ถึงตรงนี้)
+docker-compose down #Shutdown ระบบ (ยังเรียนไม่ถึงตรงนี้)
