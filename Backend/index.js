@@ -24,6 +24,7 @@ server.listen(port, host, () =>
 
 const express = require('express');
 const bodyParser = require('body-parser')
+const mysql = require('mysql2/promise');
 const app = express();
 
 const port = 8000
@@ -33,30 +34,49 @@ app.use(bodyParser.json());
 let user = [];
 let counter = 1;
 
-// path = GET / ถ้าเป็นในนี้ก็จะเป็น /test (GET ดู)
-app.get('/users', (req, res) =>
+let conn = null
+const initDBConnection = async () =>
 {
-    /*let user = 
+    conn = await mysql.createConnection
+    ({
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'webdb',
+        port: 8821
+    })
+}
+
+// Path = GET /users สำหรับ GET ข้อมูล user ทั้งหมด
+app.get('/users', async (req, res) =>
+{
+    const reuslts = await conn.query('SELECT * FROM users');
+    res.json(reuslts[0]);
+})
+
+// path = GET / ถ้าเป็นในนี้ก็จะเป็น /users (GET ดู)(GET อันเก่า)
+/*app.get('/users', (req, res) =>
+{
+    let user = 
     {
         name: 'John Doe',
         age: 30,
         email: 'johndoe@example.com'
     }
-    //res.send('Hello World')*/
+    res.send('Hello World')
     res.json(user);
-});
+});*/
 
-// path = POST /user (POST เพิ่ม)
-app.post('/user', (req, res) =>
+// path = POST /users (POST เพิ่ม) สำหรับเพิ่ม user ใหม่
+app.post('/users', async (req, res) =>
 {
     let user = req.body;
-    user.id = counter++;
-
-    users.push(user);
+    const results = await conn.query('INSERT INTO users SET ?', user);
+    console.log('results:', results);
     res.json
     ({
-        message: 'User added successfully',
-        user: user
+        message: 'User created successfully',
+        data: results[0]
     });
 })
 
@@ -109,7 +129,7 @@ app.delete('/user/:id', (req, res) =>
     });
 })
 
-app.listen(port, () =>
-{
+app.listen(port, async () =>
+{await initDBConnection();
     console.log(`Server is running on port ${port}`)
-})
+});
