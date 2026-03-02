@@ -25,10 +25,13 @@ server.listen(port, host, () =>
 const express = require('express');
 const bodyParser = require('body-parser')
 const mysql = require('mysql2/promise');
+const cors = require("cors");
 const app = express();
 const port = 8000
 
 app.use(bodyParser.json());
+app.use(cors());
+
 
 let user = [];
 let counter = 1;
